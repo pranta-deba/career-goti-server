@@ -1,13 +1,28 @@
 {
   "name": "careergoti-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "CareerGoti - Find Your Dream Job",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pranta Deba Nath",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "http-status": "^2.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^24.10.1"
+  }
 }
