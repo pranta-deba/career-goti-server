@@ -1,0 +1,270 @@
+{
+	"info": {
+		"_postman_id": "a1b01bb9-3dfe-41d3-9038-4b68d081e9e7",
+		"name": "CareerGoti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41326142"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Rakibul Islam\",\r\n  \"email\": \"hr@techsolutions.com\",\r\n  \"password\": \"Tech12345\",\r\n  \"phone\": \"01700000002\",\r\n  \"role\": \"organization\",\r\n  \"designation\": \"HR Manager\",\r\n  \"image\": \"https://example.com/org.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/auth/register",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							],
+							"query": [
+								{
+									"key": "studentClass",
+									"value": "IX (Commerce)",
+									"disabled": true
+								},
+								{
+									"key": "roll",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"admin12345\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/auth/login",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "studentClass",
+									"value": "IX (Commerce)",
+									"disabled": true
+								},
+								{
+									"key": "roll",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "Create Job By Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bereer {{organization-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Frontend Developer\",\r\n    \"location\": \"Remote\",\r\n    \"requiredSkills\": [\r\n        \"React\",\r\n        \"JavaScript\",\r\n        \"CSS\"\r\n    ],\r\n    \"experienceLevel\": \"2+ years\",\r\n    \"jobType\": \"Full-time\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/jobs",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/jobs",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Job",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bereer {{organization-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Frontend Developer\",\r\n    \"location\": \"Remote\",\r\n    \"requiredSkills\": [\r\n        \"React\",\r\n        \"JavaScript\",\r\n        \"CSS\"\r\n    ],\r\n    \"experienceLevel\": \"2+ years\",\r\n    \"jobType\": \"Full-time\"\r\n}"
+						},
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/jobs/691596122db1d7c058ed4b46",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"691596122db1d7c058ed4b46"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "Create Resources By Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bereer {{admin-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"React Beginner Course\",\r\n  \"platform\": \"YouTube\",\r\n  \"url\": \"https://youtube.com/react-course\",\r\n  \"relatedSkills\": [\"React\", \"JavaScript\", \"Frontend\"],\r\n  \"cost\": \"Free\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/Resource",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"Resource"
+							],
+							"query": [
+								{
+									"key": "studentClass",
+									"value": "IX (Commerce)",
+									"disabled": true
+								},
+								{
+									"key": "roll",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Resources",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{career-goti-Base-url}}/api/Resource",
+							"host": [
+								"{{career-goti-Base-url}}"
+							],
+							"path": [
+								"api",
+								"Resource"
+							],
+							"query": [
+								{
+									"key": "studentClass",
+									"value": "IX (Commerce)",
+									"disabled": true
+								},
+								{
+									"key": "roll",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
