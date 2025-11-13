@@ -15,7 +15,5 @@ router.get("/", getAllJobs);
 router.get("/:id", getSingleJob);
 router.delete("/:id", authGuard, organizationGuard, deleteJob);
 
-// router.put("/:id", updateJob);
-// router.delete("/:id", deleteJob);
 
 export default router;
