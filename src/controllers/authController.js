@@ -63,7 +63,7 @@ export const register = async (req, res, next) => {
     newUser._id = result.insertedId;
 
     const token = jwt.sign(
-      { userId: result.insertedId, role: role },
+      { userId: result.insertedId, email, role: role },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -103,9 +103,13 @@ export const login = async (req, res, next) => {
       throw new AppError(status.UNAUTHORIZED, "Invalid password.");
     }
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { userId: user._id, email, role: user.role },
+      JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
     sendResponse(res, {
       statusCode: status.OK,
       success: true,
