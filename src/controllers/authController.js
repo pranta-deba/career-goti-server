@@ -29,7 +29,9 @@ export const register = async (req, res, next) => {
         "Email, password, and role are required."
       );
     }
-    const existingUser = await db.collection(COLLECTION_NAME.USER).findOne({ email });
+    const existingUser = await db
+      .collection(COLLECTION_NAME.USER)
+      .findOne({ email });
     if (existingUser) {
       throw new AppError(
         status.BAD_REQUEST,
@@ -115,6 +117,32 @@ export const login = async (req, res, next) => {
       success: true,
       message: "Login successful!",
       data: { ...user, password: undefined, token },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const loginWithJWT = async (req, res, next) => {
+  try {
+    const db = getDB();
+    const { email } = req.user;
+    const result = await db.collection(COLLECTION_NAME.USER).findOne({ email });
+    if (!result) {
+      throw new AppError(status.NOT_FOUND, "User not found.");
+    }
+    const token = jwt.sign(
+      { user: result._id, email, role: result.role },
+      JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Login successful!",
+      data: { ...result, password: undefined, token },
     });
   } catch (error) {
     next(error);
