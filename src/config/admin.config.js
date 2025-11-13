@@ -1,5 +1,6 @@
 import { COLLECTION_NAME, ROLE } from "../utils/constants.js";
 import { getDB } from "./db.config.js";
+import bcrypt from "bcrypt";
 import {
   ADMIN_EMAIL,
   ADMIN_NAME,
@@ -25,6 +26,8 @@ const seedAdmin = async () => {
     .findOne({ email: ADMIN_EMAIL });
 
   if (!isAdminExits) {
+    const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+    admin.password = hashedPassword;
     await db.collection(COLLECTION_NAME.USER).insertOne(admin);
   }
 };
