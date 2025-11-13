@@ -22,19 +22,13 @@ The platform provides:
 
 ## API Endpoints
 
-### Authentication Routes (`/api/auth`)
-- `POST /register` - Register a new user
-- `POST /login` - Login with credentials
-- `GET /jwt` - Login with JWT token (requires authentication)
-- `GET /users` - Get all users
-
-### Job Routes (`/api/jobs`)
+#### Job Routes (`/api/jobs`)
 - `POST /` - Create a new job (requires authentication & organization role)
 - `GET /` - Get all jobs
 - `GET /:id` - Get single job by ID
 - `DELETE /:id` - Delete a job (requires authentication & organization role)
 
-### Resource Routes (`/api/resource`)
+#### Resource Routes (`/api/resource`)
 - `POST /` - Create a learning resource (requires authentication & admin role)
 - `GET /` - Get all resources
 - `DELETE /:id` - Remove a resource (requires authentication & admin role)
