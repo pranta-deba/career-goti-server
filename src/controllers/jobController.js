@@ -8,8 +8,15 @@ import { ObjectId } from "mongodb";
 export const createJob = async (req, res, next) => {
   try {
     const db = getDB();
-    const { title, location, requiredSkills, experienceLevel, jobType } =
-      req.body;
+    const {
+      title,
+      location,
+      requiredSkills,
+      experienceLevel,
+      jobType,
+      company,
+      jobDescription,
+    } = req.body;
 
     const organizationId = req.user.userId;
     const organizationEmail = req.user.email;
@@ -19,7 +26,9 @@ export const createJob = async (req, res, next) => {
       !location ||
       !requiredSkills ||
       !experienceLevel ||
-      !jobType
+      !jobType ||
+      !company ||
+      !jobDescription
     ) {
       throw new AppError(
         status.BAD_REQUEST,
@@ -35,6 +44,8 @@ export const createJob = async (req, res, next) => {
       requiredSkills,
       experienceLevel,
       jobType,
+      company,
+      jobDescription,
       createdAt: new Date(),
       isDeleted: false,
     };

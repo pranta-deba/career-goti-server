@@ -11,7 +11,7 @@ export const createResource = async (req, res, next) => {
     const adminId = req.user.userId;
     const adminEmail = req.user.email;
 
-    const { title, platform, url, relatedSkills, cost } = req.body;
+    const { title, platform, url, relatedSkills, cost, image } = req.body;
 
     if (!title || !platform || !url || !relatedSkills || !cost) {
       throw new AppError(
@@ -26,6 +26,7 @@ export const createResource = async (req, res, next) => {
       url,
       relatedSkills,
       cost,
+      image,
       createdBy: {
         adminId: new ObjectId(adminId),
         adminEmail,
