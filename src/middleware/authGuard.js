@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import status from "http-status";
 import AppError from "../utils/AppError.js";
+import { JWT_SECRET } from "../config/env.config.js";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ export const authGuard = (req, res, next) => {
       throw new AppError(status.UNAUTHORIZED, "Token missing or malformed");
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
