@@ -14,6 +14,7 @@ export const organizationGuard = (req, res, next) => {
         "Access denied. Only organizations are allowed."
       );
     }
+    console.log("Organization Guard: ",req.user)
 
     next();
   } catch (err) {

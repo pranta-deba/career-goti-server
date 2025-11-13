@@ -1,5 +1,6 @@
 export const COLLECTION_NAME = Object.freeze({
   USER: "users",
+  JOB: "jobs",
 });
 
 export const ROLE = Object.freeze({

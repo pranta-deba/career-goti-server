@@ -10,17 +10,20 @@ export const authGuard = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    console.log("Auth Guard: ", authHeader);
+
+    if (!authHeader) {
       throw new AppError(status.UNAUTHORIZED, "No token provided");
     }
 
     const token = authHeader.split(" ")[1];
     if (!token) {
-      throw new AppError(status.UNAUTHORIZED, "Token missing or malformed");
+      throw new AppError(status.UNAUTHORIZED, "No token provided");
     }
 
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
+    console.log("Auth Guard: ", decoded);
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
