@@ -3,6 +3,7 @@ import { getDB } from "../config/db.config.js";
 import AppError from "../utils/AppError.js";
 import { COLLECTION_NAME } from "../utils/constants.js";
 import sendResponse from "../utils/sendResponse.js";
+import { ObjectId } from "mongodb";
 
 export const createJob = async (req, res, next) => {
   try {
@@ -67,7 +68,28 @@ export const getAllJobs = async (req, res, next) => {
   }
 };
 
-// export const getSingleJob = async (req, res, next) => {};
+export const getSingleJob = async (req, res, next) => {
+  try {
+    const db = getDB();
+     const jobId = req.params.id;
+
+    const job = await db
+      .collection(COLLECTION_NAME.JOB)
+      .findOne({ _id: new ObjectId(jobId) });
+
+    if (!job) {
+      throw new AppError(status.NOT_FOUND, "Job not found!");
+    }
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Job fetched successfully!",
+      data: job,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // export const updateJob = async (req, res, next) => {};
 
