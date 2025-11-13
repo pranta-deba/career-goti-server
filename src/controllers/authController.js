@@ -148,3 +148,23 @@ export const loginWithJWT = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllUser = async (req, res, next) => {
+  try {
+    const db = getDB();
+    const users = await db
+      .collection(COLLECTION_NAME.USER)
+      .find({}, { projection: { password: 0 } })
+      .toArray();
+
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Users fetched successfully!",
+      data: users,
+      meta: { total: users.length },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getAllUser,
   login,
   loginWithJWT,
   register,
@@ -11,5 +12,6 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.get("/jwt", authGuard, loginWithJWT);
+router.get("/users", getAllUser);
 
 export default router;
