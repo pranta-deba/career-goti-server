@@ -29,7 +29,7 @@ export const createJob = async (req, res, next) => {
 
     const newJob = {
       title,
-      organizationId,
+      organizationId: new ObjectId(organizationId),
       organizationEmail,
       location,
       requiredSkills,
