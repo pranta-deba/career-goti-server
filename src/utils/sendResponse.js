@@ -1,10 +1,22 @@
+import status from "http-status";
+
+/**
+ * @param {import("express").Response} res
+ * @param {{
+ *  statusCode?: number;
+ *  success?: boolean;
+ *  message?: string;
+ *  data?: any;
+ *  meta?: any;
+ * }} options
+ */
 const sendResponse = (
   res,
-  { statusCode = 202, success = true, message, data, meta }
+  { statusCode = status.OK, success = true, message, data, meta }
 ) => {
-  res.status(statusCode).json({
+  res.status(Number(statusCode)).json({
     success,
-    status: statusCode,
+    status: Number(statusCode),
     message: message || "Retrieve Successful",
     meta: meta || null,
     data,

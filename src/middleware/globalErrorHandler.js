@@ -1,7 +1,8 @@
 import AppError from "../utils/AppError.js";
+import status from "http-status";
 
 const globalErrorHandler = (err, req, res, next) => {
-  let statusCode = err.statusCode || 500;
+  let statusCode = err.statusCode || status.INTERNAL_SERVER_ERROR;
   let message = err.message || "Something went wrong!";
   let errorSource = err.errorSource || [{ path: "", message }];
 
