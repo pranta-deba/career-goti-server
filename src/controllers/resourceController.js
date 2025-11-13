@@ -57,6 +57,7 @@ export const getAllResources = async (req, res, next) => {
     const resources = await db
       .collection(COLLECTION_NAME.RESOURCE)
       .find({ isDeleted: false })
+      .sort({ createdAt: -1 })
       .toArray();
     sendResponse(res, {
       statusCode: status.OK,
@@ -64,6 +65,29 @@ export const getAllResources = async (req, res, next) => {
       message: "Learning resources fetched successfully!",
       data: resources,
       meta: { total: resources.length },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeResource = async (req, res, next) => {
+  try {
+    const db = getDB();
+    const resourceId = req.params.id;
+    const result = await db
+      .collection(COLLECTION_NAME.RESOURCE)
+      .updateOne(
+        { _id: new ObjectId(resourceId) },
+        { $set: { isDeleted: true } }
+      );
+    if (result.modifiedCount === 0) {
+      throw new AppError(status.NOT_FOUND, "Resource not found.");
+    }
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Learning resource removed successfully!",
     });
   } catch (error) {
     next(error);

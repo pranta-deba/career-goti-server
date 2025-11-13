@@ -130,5 +130,22 @@ export const getSingleJob = async (req, res, next) => {
   }
 };
 
-// export const updateJob = async (req, res, next) => {};
-// export const deleteJob = async (req, res, next) => {};
+export const deleteJob = async (req, res, next) => {
+  try {
+    const db = getDB();
+    const jobId = req.params.id;
+    const result = await db
+      .collection(COLLECTION_NAME.JOB)
+      .updateOne({ _id: new ObjectId(jobId) }, { $set: { isDeleted: true } });
+    if (result.modifiedCount === 0) {
+      throw new AppError(status.NOT_FOUND, "Job not found.");
+    }
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Job deleted successfully!",
+    });
+  } catch (error) {
+    next(error);
+  }
+};

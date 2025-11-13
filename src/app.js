@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoute);
 app.use("/api/jobs", jobRoute);
-app.use("/api/Resource", resourceRoute);
+app.use("/api/resource", resourceRoute);
 app.get("/", (req, res) => res.send(rootRoute));
 
 // 404 handler
