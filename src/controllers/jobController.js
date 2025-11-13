@@ -71,7 +71,7 @@ export const getAllJobs = async (req, res, next) => {
 export const getSingleJob = async (req, res, next) => {
   try {
     const db = getDB();
-     const jobId = req.params.id;
+    const jobId = req.params.id;
 
     const job = await db
       .collection(COLLECTION_NAME.JOB)
@@ -92,5 +92,4 @@ export const getSingleJob = async (req, res, next) => {
 };
 
 // export const updateJob = async (req, res, next) => {};
-
 // export const deleteJob = async (req, res, next) => {};

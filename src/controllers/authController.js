@@ -29,7 +29,7 @@ export const register = async (req, res, next) => {
         "Email, password, and role are required."
       );
     }
-    const existingUser = await db.collection("users").findOne({ email });
+    const existingUser = await db.collection(COLLECTION_NAME.USER).findOne({ email });
     if (existingUser) {
       throw new AppError(
         status.BAD_REQUEST,
