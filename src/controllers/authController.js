@@ -61,12 +61,15 @@ export const register = async (req, res, next) => {
 
     const result = await db.collection(COLLECTION_NAME.USER).insertOne(newUser);
     newUser._id = result.insertedId;
+
     const token = jwt.sign(
       { userId: result.insertedId, role: role },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
+
     delete newUser.password;
+
     sendResponse(res, {
       statusCode: status.CREATED,
       success: true,
