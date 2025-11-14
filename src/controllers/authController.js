@@ -6,6 +6,7 @@ import AppError from "../utils/AppError.js";
 import { JWT_SECRET } from "../config/env.config.js";
 import sendResponse from "../utils/sendResponse.js";
 import { COLLECTION_NAME } from "../utils/constants.js";
+import { ObjectId } from "mongodb";
 
 export const register = async (req, res, next) => {
   try {
@@ -163,6 +164,32 @@ export const getAllUser = async (req, res, next) => {
       message: "Users fetched successfully!",
       data: users,
       meta: { total: users.length },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUser = async (req, res, next) => {
+  try {
+    const db = getDB();
+    const userId = req.params.id;
+    const data = req.body;
+    console.log(data);
+    const result = await db
+      .collection(COLLECTION_NAME.USER)
+      .updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: data },
+        { upsert: true }
+      );
+    if (result.modifiedCount === 0) {
+      throw new AppError(status.NOT_FOUND, "User not found.");
+    }
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "User updated successfully!",
     });
   } catch (error) {
     next(error);
