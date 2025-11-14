@@ -2,6 +2,7 @@ import status from "http-status";
 import sendResponse from "../utils/sendResponse.js";
 import generateTextWithGemini from "../utils/generateTextWithGemini.js";
 import chatBotAgent from "../utils/chatBotAgent.js";
+import roadMapAgent from "../utils/roadMapAgent.js";
 
 export const generateText = async (req, res, next) => {
   const { prompt } = req.body;
@@ -25,6 +26,20 @@ export const chatBot = async (req, res, next) => {
       statusCode: status.OK,
       success: true,
       message: "Text generated successfully!",
+      data: text,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const roadMapGenerator = async (req, res, next) => {
+  const { prompt } = req.body;
+  try {
+    const text = await roadMapAgent(prompt);
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Roadmap generated successfully!",
       data: text,
     });
   } catch (error) {
