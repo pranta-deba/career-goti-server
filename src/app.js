@@ -7,13 +7,14 @@ import globalErrorHandler from "./middleware/globalErrorHandler.js";
 import authRoute from "./routes/authRoute.js";
 import jobRoute from "./routes/jobRoute.js";
 import resourceRoute from "./routes/resourceRoute.js";
+import generateTextRoute from "./routes/generateTextRoutes.js";
 
 dotenv.config();
 
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://career-goti.netlify.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/jobs", jobRoute);
 app.use("/api/resource", resourceRoute);
+app.use("/api/generate", generateTextRoute);
 app.get("/", (req, res) => res.send(rootRoute));
 
 // 404 handler
