@@ -24,7 +24,6 @@ const generateTextWithGemini = async (prompt) => {
     } catch (error) {
       console.error("Gemini Error:", error.message);
 
- 
       if (error.status === 503 || error.message.includes("overloaded")) {
         retries--;
         console.log(`Retrying... attempts left: ${retries}`);

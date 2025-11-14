@@ -21,4 +21,5 @@ export const connectDB = async () => {
   }
 };
 
+
 export const getDB = () => db;

@@ -26,6 +26,7 @@ const seedAdmin = async () => {
     .findOne({ email: ADMIN_EMAIL });
 
   if (!isAdminExits) {
+    
     const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
     admin.password = hashedPassword;
     await db.collection(COLLECTION_NAME.USER).insertOne(admin);
