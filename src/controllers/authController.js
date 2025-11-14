@@ -20,8 +20,7 @@ export const register = async (req, res, next) => {
       image,
       designation,
       educationLevel,
-      department,
-      experience,
+      experienceLabel,
       preferredCareerTrack,
     } = req.body;
     if (!email || !password || !role) {
@@ -57,8 +56,7 @@ export const register = async (req, res, next) => {
 
     if (role === "user") {
       newUser.educationLevel = educationLevel || "Not specified";
-      newUser.department = department || "Not specified";
-      newUser.experience = experience || "Not specified";
+      newUser.experienceLabel = experienceLabel || "Not specified";
       newUser.preferredCareerTrack = preferredCareerTrack || "Not specified";
     }
 
