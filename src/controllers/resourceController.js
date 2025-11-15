@@ -93,3 +93,25 @@ export const removeResource = async (req, res, next) => {
     next(error);
   }
 };
+export const relevantResource = async (req, res, next) => {
+  try {
+    const db = getDB();
+    const requiredSkills = req.body.requiredSkills;
+
+    const resources = await db
+      .collection(COLLECTION_NAME.RESOURCE)
+      .find({ isDeleted: false, relatedSkills: { $in: requiredSkills } })
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Learning resources fetched successfully!",
+      data: resources,
+      meta: { total: resources.length },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

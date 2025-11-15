@@ -8,6 +8,7 @@ import authRoute from "./routes/authRoute.js";
 import jobRoute from "./routes/jobRoute.js";
 import resourceRoute from "./routes/resourceRoute.js";
 import generateTextRoute from "./routes/generateTextRoutes.js";
+import statRoute from "./routes/statRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/jobs", jobRoute);
 app.use("/api/resource", resourceRoute);
 app.use("/api/generate", generateTextRoute);
+app.use("/api/stat", statRoute);
 app.get("/", (req, res) => res.send(rootRoute));
 
 // 404 handler

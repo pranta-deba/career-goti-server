@@ -66,7 +66,14 @@ export const createJob = async (req, res, next) => {
 export const getAllJobs = async (req, res, next) => {
   try {
     const db = getDB();
-    const { title = "", location = "", jobType = "", page, limit } = req.query;
+    const {
+      title = "",
+      location = "",
+      jobType = "",
+      page,
+      limit,
+      userEmail = "",
+    } = req.query;
 
     const query = {
       isDeleted: false,
@@ -90,11 +97,52 @@ export const getAllJobs = async (req, res, next) => {
       .collection(COLLECTION_NAME.JOB)
       .countDocuments(query);
 
+    // If user email is provided → calculate matching percentage
+    let modifiedJobs = jobs;
+
+    if (userEmail) {
+      const user = await db
+        .collection(COLLECTION_NAME.USER)
+        .findOne({ email: userEmail });
+
+      if (user) {
+        const userSkills = (user.skills || []).map((s) =>
+          s.toLowerCase().trim()
+        );
+
+        modifiedJobs = jobs.map((job) => {
+          const requiredSkills = (job.requiredSkills || []).map((s) =>
+            s.toLowerCase().trim()
+          );
+
+          // Skill-based match
+          const matchedSkills = requiredSkills.filter((skill) =>
+            userSkills.includes(skill)
+          );
+
+          const matchPercentage =
+            requiredSkills.length > 0
+              ? Math.round((matchedSkills.length / requiredSkills.length) * 100)
+              : 0;
+
+          return {
+            ...job,
+            ...(matchPercentage > 0 && { matchPercentage }),
+          };
+        });
+
+        // Sort high match first (DESC)
+        modifiedJobs.sort(
+          (a, b) => (b.matchPercentage || 0) - (a.matchPercentage || 0)
+        );
+      }
+    }
+
     sendResponse(res, {
       statusCode: status.OK,
       success: true,
       message: "Jobs fetched successfully!",
-      data: jobs,
+      data: modifiedJobs,
       meta: {
         total,
         page: page ? parseInt(page) : null,
