@@ -12,7 +12,7 @@ let db;
 export const connectDB = async () => {
   try {
     const client = new MongoClient(process.env.MONGO_URI);
-    await client.connect();
+    // await client.connect();
     db = client.db();
     console.log("✅ MongoDB connected");
   } catch (err) {

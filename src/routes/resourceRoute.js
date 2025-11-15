@@ -10,9 +10,9 @@ import { adminGuard } from "../middleware/adminGuard.js";
 
 const router = express.Router();
 
-router.post("/", authGuard, adminGuard, createResource);
+router.post("/", authGuard, createResource);
 router.get("/", getAllResources);
-router.delete("/:id", authGuard, adminGuard, removeResource);
+router.delete("/:id", authGuard, removeResource);
 router.post("/relevant", relevantResource);
 
 export default router;
